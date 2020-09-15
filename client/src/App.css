@@ -1,0 +1,72 @@
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+body {
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+}
+
+.cardHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin: 2%;
+  border-radius: 6px;
+}
+
+.cardBit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  background-color: #163a81;
+  color: #ffffff;
+  margin: 2%;
+  border-radius: 6px;
+}
+
+.innerBox {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  max-height: 100%;
+}
+
+.imgHolder {
+  height: 75%;
+  margin-bottom: 4%;
+}
+
+.imgHolder img {
+  object-fit: fill;
+  max-width: 100%;
+  border-radius: 6px;
+  max-height: 800px;
+}
+
+.backgroundHolder {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: url("./assets/Galaxy.jpg");
+  border-radius: 6px;
+  opacity: 0.5;
+  object-fit: stretch;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
