@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 
 import NasaCard from "./NasaCard";
@@ -7,20 +9,37 @@ export default function NasaList() {
 
     const [nasaInfo, setNasaInfo] = useState([]);
     const date = useRef(new Date());
+    const [selectedDate, setSelectedDate] = useState(date.current);
     const [pushed, setPushed] = useState(0);
+    const [isCurrentDay, setIsCurrentDay] = useState(true);
+    const [current] = useState(new Date());
 
     function dateUp() {
         const tomorrow = date.current;
         tomorrow.setDate(tomorrow.getDate() + 1);
         date.current = tomorrow;
+        setSelectedDate(date.current)
         setPushed(prevPushed => prevPushed + 1)
+
+        if (date.current.getDate() === current.getDate()) {
+            setIsCurrentDay(true);
+        } else {
+            setIsCurrentDay(false);
+        }
     }
 
     function dateDown() {
         const yesterday = date.current;
         yesterday.setDate(yesterday.getDate() - 1);
         date.current = yesterday;
+        setSelectedDate(date.current)
         setPushed(prevPushed => prevPushed + 1)
+
+        if (date.current.getDate() === current.getDate()) {
+            setIsCurrentDay(true);
+        } else {
+            setIsCurrentDay(false);
+        }
     }
 
     useEffect(() => {
@@ -41,7 +60,31 @@ export default function NasaList() {
     return (
         <>
             <div className='cardHolder'>
-                <button className='daySwitch' onClick={dateDown}>Previous</button>
+
+                <div className="dateSelectorBox">
+                    <button className='daySwitch' onClick={dateDown}>Previous</button>
+
+                    <div className='dateWrapper'>
+                        <DatePicker selected={selectedDate}
+                            onChange={pickDate => {
+                                setSelectedDate(pickDate);
+                                date.current = pickDate;
+                                setPushed(prevPushed => prevPushed + 1);
+
+                                if (date.current.getDate() === current.getDate()) {
+                                    setIsCurrentDay(true);
+                                } else {
+                                    setIsCurrentDay(false);
+                                }
+                            }}
+                            dateFormat="yyyy/MM/dd"
+                            maxDate={current}
+                            showYearDropdown
+                            scrollableMonthYearDropdown />
+                    </div>
+
+                    <button className='daySwitch' onClick={dateUp} disabled={isCurrentDay}>Next</button>
+                </div>
 
                 <NasaCard
                     explanation={nasaInfo.explanation}
@@ -49,8 +92,8 @@ export default function NasaList() {
                     title={nasaInfo.title}
                     date={nasaInfo.date}></NasaCard>
 
-                <button className='daySwitch' onClick={dateUp}>Next</button>
             </div>
+
             <div className="backgroundHolder" />
         </>
     )
