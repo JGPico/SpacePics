@@ -6,36 +6,37 @@ import NasaCard from "./NasaCard";
 export default function NasaList() {
 
     const [nasaInfo, setNasaInfo] = useState([]);
-    const [date, setDate] = useState(new Date());
-    const [day, setDay] = useState(7);
-    const [month, setMonth] = useState(9);
-    const [year, setYear] = useState(2020);
-
-    console.log("Full date ", date)
-    console.log("Today's date ", date.getDate())
-    console.log("Month is ", date.getMonth())
-    console.log("Year is ", date.getFullYear())
+    const date = useRef(new Date());
+    const [pushed, setPushed] = useState(0);
 
     function dateUp() {
-        const tomorrow = date;
+        const tomorrow = date.current;
         tomorrow.setDate(tomorrow.getDate() + 1);
-        setDate(tomorrow);
+        date.current = tomorrow;
+        setPushed(prevPushed => prevPushed + 1)
     }
 
     function dateDown() {
-        const yesterday = date;
+        const yesterday = date.current;
         yesterday.setDate(yesterday.getDate() - 1);
-        setDate(yesterday);
+        date.current = yesterday;
+        setPushed(prevPushed => prevPushed + 1)
     }
+
     useEffect(() => {
-        axios.get(`https://api.nasa.gov/planetary/apod?api_key=E6U2FPAaDsk5SGEeaVtBlwh9KvF3UKzTFAq3ofyI&date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        axios.get(`https://api.nasa.gov/planetary/apod?api_key=E6U2FPAaDsk5SGEeaVtBlwh9KvF3UKzTFAq3ofyI&date=${date.current.getFullYear()}-${date.current.getMonth() + 1}-${date.current.getDate()}`)
             .then(res => {
                 console.log("This is the response ", res);
                 setNasaInfo(res.data)
             }).catch(err => {
                 console.log("An error occured when retrieving data from the NASA API ", err)
+                setNasaInfo(
+                    {
+                        explanation: "There is no picture of the day for this date",
+                        date: `${date.current.getFullYear()}-${date.current.getMonth()}-${date.current.getDate()}`
+                    });
             });
-    }, [date]);
+    }, [pushed]);
 
     return (
         <>
