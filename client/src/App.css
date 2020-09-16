@@ -51,6 +51,13 @@ body {
   max-height: 800px;
 }
 
+.daySwitch {
+  height: 40px;
+  width: 100px;
+  background: darkgrey;
+  border-radius: 25%;
+}
+
 .backgroundHolder {
   content: "";
   position: absolute;

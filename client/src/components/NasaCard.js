@@ -3,14 +3,18 @@ import React from 'react';
 const NasaCard = (props) => {
     return (
         <div className="cardBit">
-            <h2>Title: {props.title}</h2>
-            <p>Date: {props.date}</p>
+
+            {props.title ? <h1>Title: {props.title}</h1> : <h1>Invalid Date</h1>}
+            {props.date ? <p>Date: {props.date}</p> : <p></p>}
+
             <div className="innerBox">
-                <p>Explanation: {props.explanation}</p>
+                {props.explanation ? <p>{props.explanation}</p> :
+                    <p>The Nasa API doesn't have an image for this date</p>}
                 <div className="imgHolder">
-                    <img src={props.url} alt="Cool Pic"></img>
+                    <img src={props.url} alt="Image not available"></img>
                 </div>
             </div>
+
         </div>
     )
 }
