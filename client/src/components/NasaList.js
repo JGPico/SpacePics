@@ -13,12 +13,14 @@ export default function NasaList() {
     const [pushed, setPushed] = useState(0);
     const [isCurrentDay, setIsCurrentDay] = useState(true);
     const [current] = useState(new Date());
+    const [loading, setLoading] = useState(false);
 
     function dateUp() {
         const tomorrow = date.current;
         tomorrow.setDate(tomorrow.getDate() + 1);
         date.current = tomorrow;
         setSelectedDate(date.current)
+        setLoading(false)
         setPushed(prevPushed => prevPushed + 1)
 
         if (date.current.getDate() === current.getDate()) {
@@ -33,6 +35,7 @@ export default function NasaList() {
         yesterday.setDate(yesterday.getDate() - 1);
         date.current = yesterday;
         setSelectedDate(date.current)
+        setLoading(false)
         setPushed(prevPushed => prevPushed + 1)
 
         if (date.current.getDate() === current.getDate()) {
@@ -47,6 +50,7 @@ export default function NasaList() {
             .then(res => {
                 console.log("This is the response ", res);
                 setNasaInfo(res.data)
+                setLoading(true)
             }).catch(err => {
                 console.log("An error occured when retrieving data from the NASA API ", err)
                 setNasaInfo(
@@ -69,6 +73,7 @@ export default function NasaList() {
                             onChange={pickDate => {
                                 setSelectedDate(pickDate);
                                 date.current = pickDate;
+                                setLoading(false)
                                 setPushed(prevPushed => prevPushed + 1);
 
                                 if (date.current.getDate() === current.getDate()) {
@@ -90,7 +95,8 @@ export default function NasaList() {
                     explanation={nasaInfo.explanation}
                     url={nasaInfo.url}
                     title={nasaInfo.title}
-                    date={nasaInfo.date}></NasaCard>
+                    date={nasaInfo.date}
+                    loading={loading}></NasaCard>
 
             </div>
 

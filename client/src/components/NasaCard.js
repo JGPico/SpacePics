@@ -1,4 +1,5 @@
 import React from 'react';
+import { BeatLoader } from 'react-spinners';
 
 const NasaCard = (props) => {
     return (
@@ -11,7 +12,7 @@ const NasaCard = (props) => {
                 {props.explanation ? <p>{props.explanation}</p> :
                     <p>The Nasa API doesn't have an image for this date</p>}
                 <div className="imgHolder">
-                    <img src={props.url} alt="Image not available"></img>
+                    {props.loading ? <img src={props.url} alt="Image not available"></img> : <BeatLoader loading />}
                 </div>
             </div>
 
