@@ -11,9 +11,10 @@ const NasaCard = (props) => {
             <div className="innerBox">
                 {props.explanation ? <p>{props.explanation}</p> :
                     <p>Loading ...</p>}
-                <div className="imgHolder">
-                    {props.loading ? <img src={props.url} alt="Image not available"></img> : <BeatLoader loading />}
-                </div>
+            </div>
+
+            <div className="imgHolder">
+                {props.loading ? <img src={props.url} alt="Image not available"></img> : <BeatLoader loading />}
             </div>
 
         </div>

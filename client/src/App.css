@@ -47,7 +47,7 @@ body {
 
 .imgHolder img {
   object-fit: fill;
-  max-width: 100%;
+  max-width: 90%;
   border-radius: 6px;
   max-height: 800px;
 }
@@ -96,3 +96,25 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+
+@media (max-width: 500px) {
+
+  .cardBit {
+    width: 90%;
+  }
+
+  .dateSelectorBox {
+    width: 88%;
+  }
+
+  .imgHolder img {
+    width: 90%;
+    
+  }
+}
+
+/* @media(orientation: landscape) and (max-width: 500px) {
+  .imgHolder img {
+    transform: rotate(90deg);
+  }
+} */
